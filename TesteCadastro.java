@@ -1,4 +1,6 @@
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
@@ -8,12 +10,27 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.Select;
 
 public class TesteCadastro {
-	@Test
-	public void testeDePreenchimentoeconfirmacao() {
-		WebDriver driver = new FirefoxDriver();
+	
+	private WebDriver driver;
+
+	@Before
+	public void inicializa() {
+
+		driver = new FirefoxDriver();
 		driver.manage().window().setSize(new Dimension(900, 950));
 		driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
 
+	}
+
+	@After
+
+	public void finaliza() {
+		driver.quit();
+	}
+	
+	@Test
+	public void testeDePreenchimentoeconfirmacao() {
+		
 		driver.findElement(By.id("elementosForm:nome")).sendKeys("Wesley Carlos");
 		driver.findElement(By.id("elementosForm:sobrenome")).sendKeys("Ferreira Brito");
 		driver.findElement(By.id("elementosForm:sexo:0")).click();
@@ -30,15 +47,13 @@ public class TesteCadastro {
 		Assert.assertEquals("Escolaridade: mestrado", driver.findElement(By.id("descEscolaridade")).getText());
 		Assert.assertEquals("Esportes: Natacao", driver.findElement(By.id("descEsportes")).getText());
 
-		driver.quit();
+		
 
 	}
 
 	@Test
 	public void deveValidarNomeObrigatorio() {
-		WebDriver driver = new FirefoxDriver();
-		driver.manage().window().setSize(new Dimension(900, 950));
-		driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
+		
 
 		// não é necessário cadastrar nome pois o primeiro cadastro requerido é o nome
 		// proximo teste valida o preenchimento do Nome e a ausencia de sobrenome
@@ -46,28 +61,24 @@ public class TesteCadastro {
 
 		Alert alert = driver.switchTo().alert();
 		Assert.assertEquals("Nome eh obrigatorio", alert.getText());
-		driver.quit();
+		
 
 	}
 
 	@Test
 	public void deveValidarSobreNomeObrigatorio() {
-		WebDriver driver = new FirefoxDriver();
-		driver.manage().window().setSize(new Dimension(900, 950));
-		driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
+		
 		//cadastra nome e verifica a ausencia de sobrenome
 		driver.findElement(By.id("elementosForm:nome")).sendKeys("Nome");
 		driver.findElement(By.id("elementosForm:cadastrar")).click();
 
 		Alert alert = driver.switchTo().alert();
 		Assert.assertEquals("Sobrenome eh obrigatorio", alert.getText());
-		driver.quit();
+		
 	}
 	@Test
 	public void deveValidarSexoObrigatorio() {
-		WebDriver driver = new FirefoxDriver();
-		driver.manage().window().setSize(new Dimension(900, 950));
-		driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
+		
 
 		driver.findElement(By.id("elementosForm:nome")).sendKeys("Nome");
 		driver.findElement(By.id("elementosForm:sobrenome")).sendKeys("sobrenome");
@@ -75,14 +86,12 @@ public class TesteCadastro {
 
 		Alert alert = driver.switchTo().alert();
 		Assert.assertEquals("Sexo eh obrigatorio", alert.getText());
-		driver.quit();
+		
 
 	}
 	@Test
 	public void deveValidarSeVegetariano() {
-		WebDriver driver = new FirefoxDriver();
-		driver.manage().window().setSize(new Dimension(900, 950));
-		driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
+		
 		
 		driver.findElement(By.id("elementosForm:nome")).sendKeys("Nome");
 		driver.findElement(By.id("elementosForm:sobrenome")).sendKeys("sobrenome");
@@ -92,14 +101,12 @@ public class TesteCadastro {
 		driver.findElement(By.id("elementosForm:cadastrar")).click();
 		Alert alert = driver.switchTo().alert();
 		Assert.assertEquals("Tem certeza que voce eh vegetariano?", alert.getText());
-		driver.quit();
+		
 		
 	}
 	@Test
 	public void deveValidarSeFazEsporte() {
-		WebDriver driver = new FirefoxDriver();
-		driver.manage().window().setSize(new Dimension(900, 950));
-		driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
+		
 		
 		driver.findElement(By.id("elementosForm:nome")).sendKeys("Nome");
 		driver.findElement(By.id("elementosForm:sobrenome")).sendKeys("sobrenome");
@@ -119,7 +126,7 @@ public class TesteCadastro {
 		Alert alert = driver.switchTo().alert();
 		Assert.assertEquals("Voce faz esporte ou nao?", alert.getText());
 		//alert.accept();
-		driver.quit();
+		
 		
 	}
 }
