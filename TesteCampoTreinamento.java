@@ -39,6 +39,14 @@ public class TesteCampoTreinamento {
 	}
 
 	@Test
+	public void textFieldDuplo() {
+		dsl.escreve("elementosForm:nome", "wesley");
+		Assert.assertEquals("wesley", dsl.obterValorCampo("elementosForm:nome"));
+		dsl.escreve("elementosForm:nome", "Brito");
+		Assert.assertEquals("Brito", dsl.obterValorCampo("elementosForm:nome"));
+	}
+		
+	@Test
 	public void deveInteragirComTextArea() {
 		dsl.escreve("elementosForm:sugestoes", "sugestões\n Novo\n Novo\n Novo");
 		Assert.assertEquals("sugestões\n Novo\n Novo\n Novo", dsl.obterValorCampo("elementosForm:sugestoes"));
@@ -124,12 +132,12 @@ public class TesteCampoTreinamento {
 	@Test
 	public void deveBuscarTextosNaPagina() {
 
-		//driver.findElement(By.tagName("body"));
+		// driver.findElement(By.tagName("body"));
 		// Assert.assertTrue(driver.findElement(By.tagName("body")).getText().contains("Campo
 		// de Treinamento"));
 
-		Assert.assertEquals("Campo de Treinamento",dsl.obterTexto(By.tagName("h3")));
-		Assert.assertEquals("Cuidado onde clica, muitas armadilhas...",dsl.obterTexto(By.className("facilAchar")));
+		Assert.assertEquals("Campo de Treinamento", dsl.obterTexto(By.tagName("h3")));
+		Assert.assertEquals("Cuidado onde clica, muitas armadilhas...", dsl.obterTexto(By.className("facilAchar")));
 
 	}
 }
